@@ -1,9 +1,11 @@
 package com.example.marvelcomics;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,7 +18,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     String[] imgs;
     Context context;
 
-    public MyAdapter (Context ct, String title[], String description[], String images[]){
+    public MyAdapter (Context ct, String[] title, String[] description, String[] images){
         context = ct;
         titles = title;
         descrptions = description;
@@ -36,12 +38,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.titleView.setText(titles[position]);
         holder.descView.setText(descrptions[position]);
-//        holder.coverView.setImageResource(imgs[position]);
+        holder.coverView.setImageDrawable(Drawable.createFromPath(imgs[position]));
     }
 
     @Override
     public int getItemCount() {
-        return 25;
+        return titles.length;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -56,5 +58,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             descView = itemView.findViewById(R.id.comic_description);
             coverView = itemView.findViewById(R.id.comic_cover);
         }
+
+        public void getFilter() {
+
+        }
     }
+
+
 }
