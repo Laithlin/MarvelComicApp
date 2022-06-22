@@ -20,37 +20,58 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     ArrayList<String> titles, descrptions;
     ArrayList<String> imgs;
     Context context;
-    String searchResult = "";
+    private ArrayList<String> searchResult = new ArrayList<String>();
 
     public MyAdapter (Context ct, ArrayList<String> title, ArrayList<String> description, ArrayList<String> images){
         context = ct;
         titles = title;
         descrptions = description;
         imgs = images;
+        for(int i = 0; i < 25; i++)
+        {
+            this.searchResult.add("");
+        }
+
 
     }
 
-    public void update (ArrayList<String> title, ArrayList<String> desc, ArrayList<String> img){
+    public void update (ArrayList<String> title, ArrayList<String> desc, ArrayList<String> img, ArrayList<String> check){
         titles = new ArrayList<String>();
         descrptions = new ArrayList<String>();
         imgs = new ArrayList<String>();
 
         Log.e("wielkosc", String.valueOf(title.size()));
 
-        if (title.size() == 0){
-            searchResult = "There's no such comic....";
-            titles = title;
-            descrptions = desc;
-            imgs = img;
-        }
-        else{
-            titles = title;
-            descrptions = desc;
-            imgs = img;
-            searchResult = "";
-        }
+//        if (title.size() == 0){
+//
+//            this.searchResult = new ArrayList<String>();
+//            for(int i = 0; i < 25; i++)
+//            {
+//                this.searchResult.add(check);
+//            }
+//            titles = title;
+//            descrptions = desc;
+//            imgs = img;
+//        }
+//        else{
+//            titles = title;
+//            descrptions = desc;
+//            imgs = img;
+//            this.searchResult = new ArrayList<String>();
+//            for(int i = 0; i < title.size(); i++)
+//            {
+//                this.searchResult.add("");
+//            }
+//        }
+//        Log.e("search", this.searchResult);
 
+        this.searchResult = check;
+
+        titles = title;
+        descrptions = desc;
+        imgs = img;
         notifyDataSetChanged();
+
     }
 
     @NonNull
@@ -65,7 +86,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.titleView.setText(titles.get(position));
         holder.descView.setText(descrptions.get(position));
-        holder.searchView.setText(searchResult);
+//        Log.e("search2", this.searchResult);
+        holder.searchView.setText(this.searchResult.get(position));
         holder.coverView.setImageDrawable(Drawable.createFromPath(imgs.get(position)));
     }
 
@@ -88,9 +110,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             searchView = itemView.findViewById(R.id.search);
         }
 
-        public void getFilter() {
-
-        }
     }
 
 

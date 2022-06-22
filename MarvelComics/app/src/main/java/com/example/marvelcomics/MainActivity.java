@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<String> result_titles = new ArrayList<String>();
                 ArrayList<String> result_desc = new ArrayList<String>();
                 ArrayList<String> result_imgs = new ArrayList<String>();
+                ArrayList<String> check_search = new ArrayList<String>();
 
                 for(String x: titles_array)
                 {
@@ -74,10 +75,17 @@ public class MainActivity extends AppCompatActivity {
                         result_titles.add(x);
                         result_desc.add(desc_array.get(index));
                         result_imgs.add(img_array.get(index));
+                        check_search.add("...");
+                        if (result_titles.size() == 0){
+                            check_search.add("There's no such comic....");
+                            result_titles.add("fg");
+                            result_desc.add("vof");
+                            result_imgs.add("http://i.annihil.us/u/prod/marvel/i/mg/6/90/5a664c954a55b");
+                        }
                     }
                 }
 
-                ((MyAdapter) recyclerView.getAdapter()).update(result_titles, result_desc, result_imgs);
+                ((MyAdapter) recyclerView.getAdapter()).update(result_titles, result_desc, result_imgs, check_search);
 
                 return false;
             }
