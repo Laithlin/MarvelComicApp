@@ -12,18 +12,32 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
-    String titles[], descrptions[];
-    String[] imgs;
+    ArrayList<String> titles, descrptions;
+    ArrayList<String> imgs;
     Context context;
 
-    public MyAdapter (Context ct, String[] title, String[] description, String[] images){
+    public MyAdapter (Context ct, ArrayList<String> title, ArrayList<String> description, ArrayList<String> images){
         context = ct;
         titles = title;
         descrptions = description;
         imgs = images;
 
+    }
+
+    public void update (ArrayList<String> title, ArrayList<String> desc, ArrayList<String> img){
+        titles = new ArrayList<String>();
+        descrptions = new ArrayList<String>();
+        imgs = new ArrayList<String>();
+
+        titles = title;
+        descrptions = desc;
+        imgs = img;
+
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -36,14 +50,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.titleView.setText(titles[position]);
-        holder.descView.setText(descrptions[position]);
-        holder.coverView.setImageDrawable(Drawable.createFromPath(imgs[position]));
+        holder.titleView.setText(titles.get(position));
+        holder.descView.setText(descrptions.get(position));
+        holder.coverView.setImageDrawable(Drawable.createFromPath(imgs.get(position)));
     }
 
     @Override
     public int getItemCount() {
-        return titles.length;
+        return titles.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

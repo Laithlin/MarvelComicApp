@@ -24,9 +24,9 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 //    private final ArrayList<String[]> c_data = new ArrayList<String[]>();
-    private String[] titles_array = new String[25];
-    private String[] desc_array = new String[25];
-    private String[] img_array = new String[25];
+    private ArrayList<String> titles_array = new ArrayList<String>();
+    private ArrayList<String> desc_array = new ArrayList<String>();
+    private ArrayList<String> img_array = new ArrayList<String>();
 
     RecyclerView recyclerView;
 
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         Log.e("error", " dziala");
 
         getJsonData();
-        Log.e("error", this.titles_array[0]);
+        Log.e("error", this.titles_array.get(0));
         MyAdapter myAdapter = new MyAdapter(this, this.titles_array, this.desc_array, this.img_array);
         recyclerView.setAdapter(myAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -63,7 +63,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
 
+                ArrayList<String> result_titles = new ArrayList<String>();
+                ArrayList<String> result_desc = new ArrayList<String>();
+                ArrayList<String> result_imgs = new ArrayList<String>();
 
+                for(String x: titles_array)
+                {
+                    if(x.contains(newText)){
+                        int index = titles_array.indexOf(x);
+                        result_titles.add(x);
+                        result_desc.add(desc_array.get(index));
+                        result_imgs.add(img_array.get(index));
+                    }
+                }
+
+                ((MyAdapter) recyclerView.getAdapter()).update(result_titles, result_desc, result_imgs);
 
                 return false;
             }
@@ -97,9 +111,9 @@ public class MainActivity extends AppCompatActivity {
 //                temp_list.add(temp_title);
 //                temp_list.add(temp_description);
 //                temp_list.add(image);
-                this.titles_array[i] = temp_title;
-                this.desc_array[i] = temp_description;
-                this.img_array[i] = image;
+                this.titles_array.add(temp_title);
+                this.desc_array.add(temp_description);
+                this.img_array.add(image);
 //                this.c_data.add(temp_list);
 //                String[] m = c_data.get(0);
 //                Log.d("Results", m[0]);
