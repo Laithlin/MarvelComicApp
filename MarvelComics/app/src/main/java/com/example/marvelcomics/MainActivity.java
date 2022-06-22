@@ -23,7 +23,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
-//    private final ArrayList<String[]> c_data = new ArrayList<String[]>();
     private ArrayList<String> titles_array = new ArrayList<String>();
     private ArrayList<String> desc_array = new ArrayList<String>();
     private ArrayList<String> img_array = new ArrayList<String>();
@@ -36,10 +35,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recView);
-        Log.e("error", " dziala");
 
         getJsonData();
-        Log.e("error", this.titles_array.get(0));
         MyAdapter myAdapter = new MyAdapter(this, this.titles_array, this.desc_array, this.img_array);
         recyclerView.setAdapter(myAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -75,12 +72,12 @@ public class MainActivity extends AppCompatActivity {
                         result_titles.add(x);
                         result_desc.add(desc_array.get(index));
                         result_imgs.add(img_array.get(index));
-                        check_search.add("...");
+                        check_search.add("");
                         if (result_titles.size() == 0){
                             check_search.add("There's no such comic....");
-                            result_titles.add("fg");
-                            result_desc.add("vof");
-                            result_imgs.add("http://i.annihil.us/u/prod/marvel/i/mg/6/90/5a664c954a55b");
+                            result_titles.add("");
+                            result_desc.add("");
+                            result_imgs.add("");
                         }
                     }
                 }
@@ -100,31 +97,19 @@ public class MainActivity extends AppCompatActivity {
             JSONObject json = new JSONObject(jsonString);
             JSONObject comics_data = json.getJSONObject("data");
             JSONArray comics = comics_data.getJSONArray("results");
-            Log.d("Details-->", comics_data.getString("results"));
-//            ArrayList<ArrayList<String>> c_data = new ArrayList<ArrayList<String>>();
             for (int i = 0; i < comics.length(); i ++){
                 JSONObject temp = comics.getJSONObject(i);
-//                ArrayList<String> temp_list = new ArrayList<String>();
 
                 String temp_title = temp.getString("title");
-                Log.d("Details-->", temp_title);
                 String temp_description = temp.getString("description");
                 JSONArray img = temp.getJSONArray("images");
 
-//                JSONObject img_temp = img.getJSONObject(0);
-//                String image = img_temp.getString("path");
                 String image = checkImage(img);
-                Log.d("Image", image);
-                String[] temp_list = {temp_title, temp_description, image};
-//                temp_list.add(temp_title);
-//                temp_list.add(temp_description);
-//                temp_list.add(image);
+
                 this.titles_array.add(temp_title);
                 this.desc_array.add(temp_description);
                 this.img_array.add(image);
-//                this.c_data.add(temp_list);
-//                String[] m = c_data.get(0);
-//                Log.d("Results", m[0]);
+
 
             }
         } catch (Exception e) {

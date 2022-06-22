@@ -40,31 +40,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         descrptions = new ArrayList<String>();
         imgs = new ArrayList<String>();
 
-        Log.e("wielkosc", String.valueOf(title.size()));
-
-//        if (title.size() == 0){
-//
-//            this.searchResult = new ArrayList<String>();
-//            for(int i = 0; i < 25; i++)
-//            {
-//                this.searchResult.add(check);
-//            }
-//            titles = title;
-//            descrptions = desc;
-//            imgs = img;
-//        }
-//        else{
-//            titles = title;
-//            descrptions = desc;
-//            imgs = img;
-//            this.searchResult = new ArrayList<String>();
-//            for(int i = 0; i < title.size(); i++)
-//            {
-//                this.searchResult.add("");
-//            }
-//        }
-//        Log.e("search", this.searchResult);
-
         this.searchResult = check;
 
         titles = title;
@@ -86,7 +61,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.titleView.setText(titles.get(position));
         holder.descView.setText(descrptions.get(position));
-//        Log.e("search2", this.searchResult);
         holder.searchView.setText(this.searchResult.get(position));
         holder.coverView.setImageDrawable(Drawable.createFromPath(imgs.get(position)));
     }
